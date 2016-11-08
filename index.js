@@ -5,7 +5,10 @@ function lift () {
       self.log.info('Shutting down...');
       self.config.beforeShutdown(function (err) {
         self.log.info('Shutted down...');
-        process.exit(err ? 1 : 0);
+        self.lower()
+          .on('lowered', function () {
+            process.exit(err ? 1 : 0);
+          });
       });
     });
   }
